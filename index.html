@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EmojiPicker Demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="EmojiPicker.js"></script>
+        <link rel="stylesheet" type="text/css" href="EmojiPicker.css">
+        <style>
+            body {
+                font-family: Arial;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            #center {
+                width: 500px;
+                margin: 20px auto;
+            }
+        </style>
+        <script>
+            function initEmojiPicker() {
+                var ep = new EmojiPicker();
+            }
+        </script>
+    </head>
+    <body onload="initEmojiPicker()">
+        <h1>EmojiPicker Demo Page</h1>
+        <div id="center">
+            <div id="emojiArea"></div>
+        </div>
+    </body>
+</html>
