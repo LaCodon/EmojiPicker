@@ -13,6 +13,7 @@
     border: 1px solid #ccc;
     font-family: Arial;
     font-size: 15px;
+    overflow: auto;
 }
 
 #emojiArea:focus {
@@ -31,12 +32,11 @@
     position: absolute;
     z-index: 999;
     width: 180px;
-    /*margin-left: -180px;*/
+    margin-left: -155px;
     padding: 0;
     overflow: hidden;
     box-sizing: border-box;
-    /*margin-top: -225px;*/
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 }
 
 #emojiMenu > div {
@@ -50,4 +50,42 @@
     padding: 0px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+#emojiMenu img, #emojiArea img {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    border: 0 none;
+}
+
+#emojiArea img {
+    width: 20px;
+    height: 20px;
+    margin-top: -5px;
+}
+
+#emojiMenu a {
+    margin: -1px 0 0 -1px;
+    border: 1px solid #f2f2f2;
+    padding: 5px;
+    display: block;
+    float: left;
+}
+
+#emojiMenuBtnWrapper {
+    float: right;
+    padding: 5px 5px 0px 0px;
+}
+
+#emojiMenuBtn {
+    background-image: url('emojis/smile.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    border: none;
+    padding: 0px;
+    background-color: transparent;
+    cursor: pointer;
 }
