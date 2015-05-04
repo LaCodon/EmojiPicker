@@ -52,11 +52,22 @@
                 margin: 5px;
                 padding: 10px;
             }
+
+            span {
+                background-color: #ffcc33;
+                display: block;
+                text-align: center;
+                padding: 12px;
+            }
+
+            span.red {
+                background-color: #ff3333;
+                color: #fff;
+            }
         </style>
         <script>
             /* global EmojiPickerSettings */
             function initEmojiPicker() {
-                EmojiPickerSettings.path = 'emojis/';
                 EmojiPickerSettings.icons = {'bowtie': 'bowtie.png',
                     'smile': 'smile.png',
                     'laughing': 'laughing.png',
@@ -258,7 +269,7 @@
         <div class="center">
             <h3>Result of <code>getValue()</code></h3>
             <div id="result"></div>
-            <small><i>Updates only while typing text, not by clicking a emoji.</i></small>
+            <small><i>Updates only while typing text, not by clicking an emoji.</i></small>
         </div>
         <div class="center">
             <h3>Result of <code>render()</code></h3>
@@ -267,9 +278,11 @@
             <div id="render"></div>
         </div>
         <div class="center">
-            <h2>How to use EmojiPicker</h2>
-            <h3>Minimal</h3>
-            <p>Store emojis, for example as <code>*.png</code> files, in <code>/emojis/</code> folder</p>
+            <h2>How to use EmojiPicker.js</h2>
+            <span>EmojiPicker.js does <b>not</b> require jQuery!</span>
+
+            <h3 id="minimal">Minimal</h3>
+            <p>Store emojis, for example as <code>*.png</code> files, in the <code>/emojis/</code> folder</p>
             <blockquote>
                 &#9134;- index.html<br>
                 &#9134;- EmojiPicker.js<br>
@@ -286,6 +299,83 @@
                 &lt;script src="EmojiPicker.js">&lt;/script><br>
                 &lt;link rel="stylesheet" type="text/css" href="EmojiPicker.css">
             </blockquote>
+            <p>Add the following JavaScript Code to your index.html</p>
+            <blockquote>
+                function initEmojiPicker() {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmojiPickerSettings.path = 'emojis/';<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmojiPickerSettings.icons = {'bowtie': 'bowtie.png',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'smile': 'smile.png',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'laughing': 'laughing.png',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'blush': 'blush.png',<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'smiley': 'smiley.png'};<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var ep = new EmojiPicker();<br>
+                }
+            </blockquote>
+            <p>And the following HTML body tag</p>
+            <blockquote>
+                &lt;body onload="initEmojiPicker()"><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="emojiArea">&lt;/div><br>
+                &lt;/body>
+            </blockquote>
+
+            <h3>Advanced</h3>
+            <h4>Including emojis</h4>
+            <p>
+                Save all emojis in a folder and add each one with a shortcut code and
+                it's filename to <code>EmojiPickerSettings.icons</code> as seen
+                in <a href="#minimal">Minimal section</a> in the following format:
+            </p>
+            <blockquote>
+                {'<i>shortcut</i>': '<i>filename.png</i>'};
+            </blockquote>
+            <p>
+                You can also copy the <code>/emojis/</code> folder from the source
+                and include this <a href="snippet.txt">JavaScript Snippet</a> after including <code>EmojiPicker.js</code>
+                in your HTML.
+            </p>
+            <p>
+                The last step you have to do is to tell EmojiPicker.js where to find
+                the the emoji images. To do so, replace <i>path/to/png/</i> with yours.
+            </p>
+            <blockquote>
+                EmojiPickerSettings.path = '<i>path/to/png/</i>';
+            </blockquote>
+            <span>Sometimes it's necessary to also set <code>EmojiPickerSettings.renderPath</code>.
+                For example if you store your JavaScript files in a <code>/js/</code> folder.</span>
+            <blockquote>
+                EmojiPickerSettings.path = '<i>../path/to/png/</i>';<br>
+                EmojiPickerSettings.renderPath = '<i>path/to/png/</i>';
+            </blockquote>
+            <h4>Determine WYSIWYG div</h4>
+            <p>The div which to use as the editor needs the id <code>emojiArea</code></p>
+            <blockquote>
+                &lt;div id="emojiArea">&lt;/div>
+            </blockquote>
+            <p>You can either use the original CSS file or create an own one. The following
+                list shows each element and it's selector.</p>
+            <ul>
+                <li><b>#emojiArea</b> - The editor div</li>
+                <li><b>#emojiMenu</b> - The emoji menu wrapper</li>
+                <li><b>#emojiMenu > div</b> - The emoji icon list</li>
+                <li><b>#emojiMenu img, #emojiArea img</b> - The img tags of WYSIWYG emojis</li>
+                <li><b>#emojiMenu a</b> - The link behind the emoji's icon</li>
+                <li><b>#emojiMenuBtnWrapper</b> - The wrapper of the button which opens the menu</li>
+                <li><b>#emojiMenuBtn</b> - The button himself</li>
+            </ul>
+            <span>If you face a selector issue because your page already uses the selectors of
+                EmojiPicker.js, you can set a prefix:</span>
+            <blockquote>
+                EmojiPickerSettings.prefix = '<i>yourPrefix_</i>';
+            </blockquote>
+            <p>Don't forget to add the prefix in your CSS!</p>
+            <span class="red">
+                EmojiPicker.js <b>always</b> requires this CSS:<br><br>
+                <i>
+                    .visible { display: block; }<br>
+                    .hidden { display: none; }
+                </i>
+            </span>
         </div>
     </body>
 </html>

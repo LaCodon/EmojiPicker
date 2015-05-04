@@ -11,7 +11,7 @@
  * The default EmojiPicker settings.
  */
 var EmojiPickerSettings = {
-    path: '',
+    path: 'emojis/',
     renderPath: 'NULL/',
     icons: {},
     prefix: ''
@@ -116,13 +116,13 @@ EmojiPicker.prototype.addAttribute = function (el, name, value) {
 };
 
 EmojiPicker.prototype.show = function (el) {
-    this.removeClass(el, 'hide');
-    this.addClass(el, 'show');
+    this.removeClass(el, 'hidden');
+    this.addClass(el, 'visible');
 };
 
 EmojiPicker.prototype.hide = function (el) {
-    this.removeClass(el, 'show');
-    this.addClass(el, 'hide');
+    this.removeClass(el, 'visible');
+    this.addClass(el, 'hidden');
 };
 
 EmojiPicker.prototype.addClass = function (el, cls) {
@@ -148,10 +148,19 @@ EmojiPicker.prototype.createIcon = function (emoji) {
     return imgTag;
 };
 
+/**
+ * This function returns the editor's content.
+ * @returns {String} The text without HTML tags
+ */
 EmojiPicker.prototype.getValue = function () {
     return document.getElementById(EmojiPickerSettings.prefix + 'emojiArea').textContent;
 };
 
+/**
+ * Reconverts a text from getValue() into HTML useable code.
+ * @param {String} text The string with :emoji: elements
+ * @returns {String} The HTML code
+ */
 EmojiPicker.prototype.render = function (text) {
     if (EmojiPickerSettings.renderPath === 'NULL/') {
         EmojiPickerSettings.renderPath = EmojiPickerSettings.path;
