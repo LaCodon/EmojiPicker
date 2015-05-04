@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>EmojiPicker.js by LaCodon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">EmojiPicker.js</h1>
+      <h2 class="project-tagline">JavaScript class for WYSIWYG Emoji div</h2>
+      <a href="https://github.com/LaCodon/EmojiPicker" class="btn">View on GitHub</a>
+      <a href="https://github.com/LaCodon/EmojiPicker/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/LaCodon/EmojiPicker/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="how-to-use-emojipickerjs" class="anchor" href="#how-to-use-emojipickerjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use EmojiPicker.js</h1>
+
+<blockquote>
+<p>EmojiPicker.js does not require jQuery!</p>
+</blockquote>
+
+<h2>
+<a id="minimal" class="anchor" href="#minimal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Minimal</h2>
+
+<p>Store emojis, for example as <code>*.png</code> files, in the <code>/emojis/</code> folder</p>
+
+<pre><code>⎮- index.html
+⎮- EmojiPicker.js
+⎮- EmojiPicker.css
+⎮- emojis/
+     ⎮- bowtie.png
+     ⎮- smile.png
+     ⎮- laughing.png
+     ⎮- blush.png
+     ⎮- smiley.png
+</code></pre>
+
+<h3>
+<a id="include-css-an-javascript-files" class="anchor" href="#include-css-an-javascript-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Include CSS an JavaScript files.</h3>
+
+<pre><code>&lt;script src="EmojiPicker.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="EmojiPicker.css"&gt;
+</code></pre>
+
+<p>Add the following JavaScript Code to your index.html</p>
+
+<pre><code>function initEmojiPicker() {
+     EmojiPickerSettings.path = 'emojis/';
+     EmojiPickerSettings.icons = {'bowtie': 'bowtie.png',
+          'smile': 'smile.png',
+          'laughing': 'laughing.png',
+          'blush': 'blush.png',
+          'smiley': 'smiley.png'};
+
+     var ep = new EmojiPicker();
+}
+</code></pre>
+
+<p>And the following HTML body tag</p>
+
+<pre><code>&lt;body onload="initEmojiPicker()"&gt;
+     &lt;div id="emojiArea"&gt;&lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+
+<h2>
+<a id="advanced" class="anchor" href="#advanced" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced</h2>
+
+<h3>
+<a id="including-emojis" class="anchor" href="#including-emojis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Including emojis</h3>
+
+<p>Save all emojis in a folder and add each one with a shortcut code and it's filename to EmojiPickerSettings.icons as seen in <a href="#minimal">Minimal section</a> in the following format:</p>
+
+<pre><code>{'shortcut': 'filename.png'};
+</code></pre>
+
+<p>You can also copy the <code>/emojis/</code> folder from the source and include this <a href="https://github.com/LaCodon/EmojiPicker/blob/master/snippet.txt">JavaScript Snippet</a> after including EmojiPicker.js in your HTML.</p>
+
+<p>The last step you have to do is to tell EmojiPicker.js where to find the the emoji images. To do so, replace <code>path/to/png/</code> with yours.</p>
+
+<pre><code>EmojiPickerSettings.path = 'path/to/png/';
+</code></pre>
+
+<blockquote>
+<p>Sometimes it's necessary to also set <code>EmojiPickerSettings.renderPath</code>.
+For example if you store your JavaScript files in a <code>/js/</code> folder.</p>
+</blockquote>
+
+<pre><code>EmojiPickerSettings.path = '../path/to/png/';
+EmojiPickerSettings.renderPath = 'path/to/png/';
+</code></pre>
+
+<h3>
+<a id="determine-wysiwyg-div" class="anchor" href="#determine-wysiwyg-div" aria-hidden="true"><span class="octicon octicon-link"></span></a>Determine WYSIWYG div</h3>
+
+<p>The div which to use as the editor needs the id <code>emojiArea</code></p>
+
+<pre><code>&lt;div id="emojiArea"&gt;&lt;/div&gt;
+</code></pre>
+
+<p>You can either use the original CSS file or create an own one. The following list shows each element and it's selector.</p>
+
+<ul>
+<li>
+<strong>#emojiArea</strong> - The editor div</li>
+<li>
+<strong>#emojiMenu</strong> - The emoji menu wrapper</li>
+<li>
+<strong>#emojiMenu &gt; div</strong> - The emoji icon list</li>
+<li>
+<strong>#emojiMenu img</strong>, #emojiArea img - The img tags of WYSIWYG emojis</li>
+<li>
+<strong>#emojiMenu a</strong> - The link behind the emoji's icon</li>
+<li>
+<strong>#emojiMenuBtnWrapper</strong> - The wrapper of the button which opens the menu</li>
+<li>
+<strong>#emojiMenuBtn</strong> - The button himself</li>
+</ul>
+
+<blockquote>
+<p>If you face a selector issue because your page already uses the selectors of EmojiPicker.js, you can set a prefix:</p>
+</blockquote>
+
+<pre><code>EmojiPickerSettings.prefix = 'yourPrefix_';
+</code></pre>
+
+<p>Don't forget to add the prefix in your CSS!</p>
+
+<blockquote>
+<p>EmojiPicker.js always requires this CSS:</p>
+
+<p>.visible { display: block; }
+.hidden { display: none; }</p>
+</blockquote>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/LaCodon/EmojiPicker">EmojiPicker.js</a> is maintained by <a href="https://github.com/LaCodon">LaCodon</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
