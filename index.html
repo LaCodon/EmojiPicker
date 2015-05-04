@@ -11,15 +11,46 @@
                 font-family: Arial;
                 padding: 0px;
                 margin: 0px;
+                font-size: 15px;
             }
 
             h1 {
                 text-align: center;
             }
 
-            #center {
+            p {
+                line-height: 20px;
+            }
+
+            .center {
                 width: 500px;
                 margin: 20px auto;
+            }
+
+            #result, #render, #renderTxt {
+                width: 100%;
+                box-sizing: border-box;
+                font-size: 15px;
+                min-height: 100px;
+                font-family: Arial;
+                padding: 10px;
+                border: 1px solid #cccccc;
+                box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+                resize: none;
+            }
+
+            #render img {
+                width: 20px;
+                height: 20px;
+                margin-top: -5px;
+                vertical-align: middle;
+            }
+
+            blockquote {
+                background-color: #efefef;
+                font-style: italic;
+                margin: 5px;
+                padding: 10px;
             }
         </style>
         <script>
@@ -201,13 +232,60 @@
                     'busts_in_silhouette': 'busts_in_silhouette.png'};
 
                 var ep = new EmojiPicker();
+
+                ep.editor.focus();
+
+                ep.editor.onkeypress = function () {
+                    document.getElementById('result').textContent = ep.getValue();
+                    document.getElementById('renderTxt').textContent = ep.render(ep.getValue());
+                    document.getElementById('render').innerHTML = ep.render(ep.getValue());
+                };
             }
         </script>
     </head>
     <body onload="initEmojiPicker()">
-        <h1>EmojiPicker Demo Page</h1>
-        <div id="center">
+        <h1>EmojiPicker - by LaCodon</h1>
+        <div class="center">
+            <h2>Demo</h2>
+            <p>
+                Enter a text underneath this paragraph and add some Emojis to see
+                what output the <code>EmojiPicker()</code> class gives.
+            </p>
+        </div>
+        <div class="center">
             <div id="emojiArea"></div>
+        </div>
+        <div class="center">
+            <h3>Result of <code>getValue()</code></h3>
+            <div id="result"></div>
+            <small><i>Updates only while typing text, not by clicking a emoji.</i></small>
+        </div>
+        <div class="center">
+            <h3>Result of <code>render()</code></h3>
+            <div id="renderTxt"></div>
+            <h4>As HTML again</h4>
+            <div id="render"></div>
+        </div>
+        <div class="center">
+            <h2>How to use EmojiPicker</h2>
+            <h3>Minimal</h3>
+            <p>Store emojis, for example as <code>*.png</code> files, in <code>/emojis/</code> folder</p>
+            <blockquote>
+                &#9134;- index.html<br>
+                &#9134;- EmojiPicker.js<br>
+                &#9134;- EmojiPicker.css<br>
+                &#9134;- emojis/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9134;- bowtie.png<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9134;- smile.png<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9134;- laughing.png<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9134;- blush.png<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9134;- smiley.png<br>
+            </blockquote>
+            <p>Include CSS an JavaScript files.</p>
+            <blockquote>
+                &lt;script src="EmojiPicker.js">&lt;/script><br>
+                &lt;link rel="stylesheet" type="text/css" href="EmojiPicker.css">
+            </blockquote>
         </div>
     </body>
 </html>

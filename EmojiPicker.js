@@ -12,6 +12,7 @@
  */
 var EmojiPickerSettings = {
     path: '',
+    renderPath: 'NULL/',
     icons: {},
     prefix: ''
 };
@@ -27,6 +28,10 @@ var EmojiPicker = function () {
 
     if (EmojiPickerSettings.path.length && EmojiPickerSettings.path.charAt(EmojiPickerSettings.path.length - 1) !== '/') {
         EmojiPickerSettings.path += '/';
+    }
+
+    if (EmojiPickerSettings.renderPath.length && EmojiPickerSettings.renderPath.charAt(EmojiPickerSettings.renderPath.length - 1) !== '/') {
+        EmojiPickerSettings.renderPath += '/';
     }
 
     this.createMenu();
@@ -79,6 +84,31 @@ EmojiPicker.prototype.emoji_click = function (emoji) {
     document.getElementById(EmojiPickerSettings.prefix + 'emojiArea').appendChild(this.createIcon(emoji));
 };
 
+EmojiPicker.prototype.getCaretPosition = function (editableDiv) {
+    var caretPos = 0,
+            sel, range;
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            if (range.commonAncestorContainer.parentNode === editableDiv) {
+                caretPos = range.endOffset;
+            }
+        }
+    } else if (document.selection && document.selection.createRange) {
+        range = document.selection.createRange();
+        if (range.parentElement() === editableDiv) {
+            var tempEl = document.createElement('span');
+            editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+            var tempRange = range.duplicate();
+            tempRange.moveToElementText(tempEl);
+            tempRange.setEndPoint('EndToEnd', range);
+            caretPos = tempRange.text.length;
+        }
+    }
+    return caretPos;
+};
+
 EmojiPicker.prototype.addAttribute = function (el, name, value) {
     var attr = document.createAttribute(name);
     attr.value = value;
@@ -112,7 +142,22 @@ EmojiPicker.prototype.createIcon = function (emoji) {
     var filename = EmojiPickerSettings.icons[emoji];
     var path = EmojiPickerSettings.path;
     var imgTag = document.createElement('img');
+    imgTag.innerHTML = ':' + emoji + ':';
     this.addAttribute(imgTag, 'src', path + filename);
     this.addAttribute(imgTag, 'alt', emoji);
     return imgTag;
+};
+
+EmojiPicker.prototype.getValue = function () {
+    return document.getElementById(EmojiPickerSettings.prefix + 'emojiArea').textContent;
+};
+
+EmojiPicker.prototype.render = function (text) {
+    if (EmojiPickerSettings.renderPath === 'NULL/') {
+        EmojiPickerSettings.renderPath = EmojiPickerSettings.path;
+    }
+    return text.replace(/:([^{\s::}]*):/g, function (a, b) {
+        var r = EmojiPickerSettings.icons[b];
+        return typeof r === 'string' ? '<img src="' + EmojiPickerSettings.renderPath + r + '" alt="emoji">' : a;
+    });
 };
