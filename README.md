@@ -1,6 +1,6 @@
 # EmojiPicker.js
 
-Visit <http://lacodon.github.io/EmojiPicker/> for Demo
+Visit <http://lacodon.github.io/EmojiPicker/> for Demo and Docu
 
 > EmojiPicker.js does not require jQuery!
 
