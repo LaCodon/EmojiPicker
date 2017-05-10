@@ -36,6 +36,8 @@ var EmojiPicker = function () {
 
     this.createMenu();
 
+    this.createOverlay();
+
 };
 
 /**
@@ -60,14 +62,46 @@ EmojiPicker.prototype.createMenu = function () {
     parent.insertBefore(buttonContainer, this.editor);
     this.loadEmojisIntoMenu();
 
-    this.menuButton.addEventListener('click', function () {
-        EmojiPicker.prototype.show(document.getElementById(EmojiPickerSettings.prefix + 'emojiMenu'));
-    });
+    this.menuButton.addEventListener('click', (function () {
+        this.show(document.getElementById(EmojiPickerSettings.prefix + 'emojiMenu'));
+        this.showOverlay();
+    }).bind(this));
 
     this.editor.addEventListener('click', function () {
         EmojiPicker.prototype.hide(document.getElementById(EmojiPickerSettings.prefix + 'emojiMenu'));
     });
 };
+
+/**
+ * Create an overlay over the page with click listener to close it
+ */
+EmojiPicker.prototype.createOverlay = function () {
+    this.overlay = document.createElement('div');
+
+    this.overlay.style.height = '100%';
+    this.overlay.style.width = '100%';
+    this.overlay.style.position = 'fixed';
+    this.overlay.style.top = '0px';
+    this.overlay.style.bottom = '0px';
+    this.overlay.style.left = '0px';
+    this.overlay.style.right = '0px';
+    this.overlay.style.zIndex = '998';
+
+    this.overlay.addEventListener('click', EmojiPicker.prototype.hideOverlay.bind(this));
+
+    this.hideOverlay();
+
+    document.getElementsByTagName('body')[0].insertBefore(this.overlay, document.getElementsByTagName('body')[0].firstChild);
+}
+
+EmojiPicker.prototype.showOverlay = function () {
+    this.overlay.style.display = 'block';
+}
+
+EmojiPicker.prototype.hideOverlay = function () {
+    this.overlay.style.display = 'none';
+    this.hide(document.getElementById(EmojiPickerSettings.prefix + 'emojiMenu'));
+}
 
 EmojiPicker.prototype.loadEmojisIntoMenu = function () {
     var icons = EmojiPickerSettings.icons;
@@ -86,7 +120,7 @@ EmojiPicker.prototype.emoji_click = function (emoji) {
 
 EmojiPicker.prototype.getCaretPosition = function (editableDiv) {
     var caretPos = 0,
-            sel, range;
+        sel, range;
     if (window.getSelection) {
         sel = window.getSelection();
         if (sel.rangeCount) {
